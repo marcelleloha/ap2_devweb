@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;800&display=swap');
+
+:root {
+  --rosa-claro: #ffb6c1;
+  --rosa-escuro: #ff69b4;
+  --rosa-vivo: #ff1493;
+  --branco: #ffffff;
+  --cinza-claro: #f0f0f0;
+  --cinza-escuro: #333333;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--cinza-claro);
+  color: var(--cinza-escuro);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#detalhes {
+  width: 100%;
+  padding: 2em;
+  background-color: var(--rosa-claro);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  #detalhes {
+    padding: 1em;
+  }
+}
+
+.atletas-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+  max-width: 1400px;
+  width: 100%;
+}
+
+@media (max-width: 1300px) {
+  .atletas-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .atletas-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .atletas-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+#filtro-buttons {
+  display: flex;
+  justify-content: space-evenly;  
+  margin-bottom: 2em;
+  width: 80%;  
+  max-width: 1000px;  
+  margin-left: auto;  
+  margin-right: auto; 
+}
+
+#filtro-buttons button {
+  background-color: var(--rosa-vivo);
+  color: var(--branco);
+  border: none;
+  border-radius: 5px;
+  padding: 0.7em 2em;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  flex-grow: 1;
+  margin: 0 1em; /* Adiciona espaçamento entre os botões */
+}
+
+#filtro-buttons button:hover {
+  background-color: var(--rosa-escuro);
+  transform: scale(1.05);
+}
+
+/* Responsividade dos Botões de Filtro */
+@media (max-width: 768px) {
+  #filtro-buttons {
+    flex-direction: column; /* Alinha os botões na vertical */
+    align-items: center;     /* Alinha os botões ao centro */
+    width: 100%;  /* Usa 100% da largura disponível */
+  }
+
+  #filtro-buttons button {
+    margin: 0.5em 0;  /* Espaçamento entre os botões na vertical */
+    width: 80%;  /* Ajusta a largura dos botões em telas menores */
+  }
+}
+
+/* Estilos do Container de Detalhes do Jogador */
+#detalhes {
+  width: 100%;
+  padding: 2em;
+  background-color: var(--rosa-claro);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#detalhes h1 {
+  color: var(--rosa-vivo);
+  font-size: 2.5em;
+  margin-bottom: 1em;
+}
+
+#detalhes p {
+  font-size: 1.2em;
+  margin: 0.5em 0;
+}
+
+@media (max-width: 768px) {
+  #detalhes h1 {
+    font-size: 2em;
+  }
+  #detalhes p {
+    font-size: 1em;
+  }
+}
+
+/* Estilos de Botões Gerais (para outras ações) */
+button,
+a.button {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--rosa-vivo);
+  color: var(--branco);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover,
+a.button:hover {
+  background-color: var(--rosa-escuro);
+}
+
+/* Estilo básico para os jogadores */
+.player {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Ajuste da imagem */
+.player img {
+  width: 300px; /* Aumenta a largura da imagem */
+  height: 400px; /* Aumenta a altura da imagem */
+  border-radius: 0;
+}
+
+/* Ajuste do título */
+.player h2 {
+  font-size: 1.5em;
+  margin-top: 10px;
+}
+
+/* Ajuste do texto da descrição */
+.player p {
+  font-size: 0.9em; /* Diminui o tamanho da descrição */
+  color: #333;
+  margin-top: 10px;
+}
+
+/* Ajuste do container de atletas */
+#atletas-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  #atletas-container {
+    grid-template-columns: 1fr;
+  }
+}
