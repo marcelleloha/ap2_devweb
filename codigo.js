@@ -1,68 +1,135 @@
-import { hex_sha256 } from './sha256-min.mjs';
+const pega_json = async (caminho) => {
+  const resposta = await fetch(caminho);
+  const dados = await resposta.json();
+  return dados;
+};
 
-function configuraBotao(botao) {
-  botao.style.display = 'flex';
-  botao.style.border = '1px solid #ccc';
-  botao.style.justifyContent = 'center';
-  botao.style.alignItems = 'center';
-  botao.style.padding = '0.8em 1.2em';
-  botao.style.marginTop = '1em';
-}
+const exibe_jogadores = (jogadores) => {
+  const container = document.getElementById('atletas-container');
+  container.innerHTML = '';
 
-const testaSenha = (senha) => {
-  const senhaCorreta = 'LIBERTADORES';
-  if (hex_sha256(senha) === hex_sha256(senhaCorreta)) {
-    sessionStorage.setItem('auth', 'true');
-    window.location.href = 'detalhes.html';  // Redireciona para a página de detalhes
-  } else {
-    alert('Senha incorreta!');
+  if (jogadores.length === 0) {
+    container.innerHTML = '<p>Nenhum jogador encontrado nesta categoria.</p>';
+    return;
+  }
+
+  jogadores.forEach((jogador) => {
+    const jogadorDiv = document.createElement('div');
+    jogadorDiv.classList.add('player');
+
+    const nome = document.createElement("h2");
+    nome.innerHTML = jogador.nome;
+    jogadorDiv.appendChild(nome);
+
+    const imagem = document.createElement("img");
+    imagem.src = jogador.imagem;
+    imagem.alt = `Foto de ${jogador.nome}`;
+    jogadorDiv.appendChild(imagem);
+
+    const descricao = document.createElement("p");
+    descricao.innerHTML = jogador.detalhes;
+    jogadorDiv.appendChild(descricao);
+
+    const linkDetalhes = document.createElement("a");
+    linkDetalhes.href = `detalhes.html?id=${jogador.id}`;
+    linkDetalhes.innerHTML = "Ver mais detalhes";
+    jogadorDiv.appendChild(linkDetalhes);
+
+    container.appendChild(jogadorDiv);
+  });
+};
+
+const buscarJogadores = (filtro) => {
+  let url = '';
+
+  switch (filtro) {
+    case 'masculino':
+      url = 'https://botafogo-atletas.mange.li/2024-1/masculino';
+      break;
+    case 'feminino':
+      url = 'https://botafogo-atletas.mange.li/2024-1/feminino';
+      break;
+    case 'all':
+      url = 'https://botafogo-atletas.mange.li/2024-1/all';
+      break;
+    default:
+      return;
+  }
+
+  pega_json(url).then((dados) => {
+    exibe_jogadores(dados);
+  });
+};
+
+const filtrarAtletas = (filtro) => {
+  const container = document.getElementById('atletas-container');
+  const jogadores = container.getElementsByClassName('player');
+
+  for (let i = 0; i < jogadores.length; i++) {
+    const nomeJogador = jogadores[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
+    if (nomeJogador.includes(filtro.toLowerCase())) {
+      jogadores[i].style.display = 'block';
+    } else {
+      jogadores[i].style.display = 'none';
+    }
   }
 };
 
-const configuraEntrada = () => {
-  sessionStorage.setItem('screen', 'login');
+export const carregaAtletas = () => {
   document.body.innerHTML = '';
-
-  const container = document.createElement('div');
-  container.id = 'container-entrada';
-  container.style.display = 'flex';
-  container.style.justifyContent = 'center';
-  container.style.alignItems = 'center';
-  container.style.flexDirection = 'column';
+  document.body.id = 'atletas-body';
+  const header = document.createElement('div');
+  header.classList.add('header');
 
   const titulo = document.createElement('h1');
-  titulo.innerHTML = 'Bem-vindo!';
-  titulo.style.margin = '0';
+  titulo.innerText = 'Lista de Atletas';
+  header.appendChild(titulo);
 
-  const texto = document.createElement('p');
-  texto.innerHTML = 'Criado com objetivos exclusivamente didáticos para a disciplina Desenvolvimento Web do Ibmec Rio.';
-  texto.style.fontSize = '1em';
-  texto.style.marginBottom = '1em';
+  const sairBtn = document.createElement('button');
+  sairBtn.innerText = 'Sair';
+  sairBtn.classList.add('botao-sair');
+  sairBtn.onclick = () => {
+    sessionStorage.removeItem('auth');
+    window.location.reload(); 
+  };
 
-  const inputSenha = document.createElement('input');
-  inputSenha.id = 'input-senha';
-  inputSenha.placeholder = 'Digite a senha';
-  inputSenha.type = 'password';
-  inputSenha.style.padding = '0.5em';
-  inputSenha.style.marginBottom = '1em';
+  header.appendChild(sairBtn);
+  document.body.appendChild(header);
 
-  const senhaCorretaDisplay = document.createElement('p');
-  senhaCorretaDisplay.innerHTML = `Senha correta: <strong>LIBERTADORES</strong>`;
-  senhaCorretaDisplay.style.fontSize = '1.2em';
-  senhaCorretaDisplay.style.marginBottom = '1em';
-  senhaCorretaDisplay.style.color = 'pink';
+  const barraPesquisa = document.createElement('input');
+  barraPesquisa.type = 'text';
+  barraPesquisa.classList.add('barra-pesquisa');
+  barraPesquisa.placeholder = 'Pesquise atletas...';
+  barraPesquisa.oninput = (e) => filtrarAtletas(e.target.value);
 
-  const botaoLogin = document.createElement('button');
-  botaoLogin.innerHTML = 'Entrar';
-  botaoLogin.onclick = () => testaSenha(inputSenha.value);
+  document.body.appendChild(barraPesquisa);
 
-  container.appendChild(titulo);
-  container.appendChild(texto);
-  container.appendChild(inputSenha);
-  container.appendChild(senhaCorretaDisplay);
-  container.appendChild(botaoLogin);
+  const botoes = document.createElement('div');
+  botoes.classList.add('botoes-filtragem');
 
+  const btnMasculino = document.createElement('button');
+  btnMasculino.innerText = 'Masculino';
+  btnMasculino.classList.add('botao-filtragem');
+  btnMasculino.onclick = () => buscarJogadores('masculino');
+
+  const btnFeminino = document.createElement('button');
+  btnFeminino.innerText = 'Feminino';
+  btnFeminino.classList.add('botao-filtragem');
+  btnFeminino.onclick = () => buscarJogadores('feminino');
+
+  const btnTodos = document.createElement('button');
+  btnTodos.innerText = 'Elenco Geral';
+  btnTodos.classList.add('botao-filtragem');
+  btnTodos.onclick = () => buscarJogadores('all');
+
+  botoes.appendChild(btnMasculino);
+  botoes.appendChild(btnFeminino);
+  botoes.appendChild(btnTodos);
+  document.body.appendChild(botoes);
+
+  const container = document.createElement('div');
+  container.id = 'atletas-container';
   document.body.appendChild(container);
-};
 
-configuraEntrada();
+  buscarJogadores('all');
+};

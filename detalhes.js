@@ -1,31 +1,87 @@
 
-const pega_json = async (caminho) => {
-    const resposta = await fetch(caminho);
-    const dados = await resposta.json();
-    return dados;
-};
-
-
-const exibe_jogadores = (jogadores) => {
-    const container = document.getElementById('atletas-container');
-    container.innerHTML = ''; 
-
-    if (jogadores.length === 0) {
-        container.innerHTML = '<p>Nenhum jogador encontrado nesta categoria.</p>';
-        return;
-    }
-
-    jogadores.forEach((jogador) => {
-  
-        const jogadorDiv = document.createElement('div');
-        jogadorDiv.classList.add('player');
-
-        const nome = document.createElement("h2");
-        nome.innerHTML = jogador.nome;
-        jogadorDiv.appendChild(nome);
-
-        const imagem = document.createElement("img");
-        imagem.src = jogador.imagem;
+ const exibeDetalhesJogador = (atleta) => {
+    const container = document.getElementById('atleta-container');
+    container.innerHTML = '';
+        
+    const pagina = document.createElement("div");
+    pagina.classList.add("pagina");
+        
+    const foto = document.createElement("div");
+    foto.classList.add("foto");
+        
+    const info = document.createElement("div");
+    info.classList.add("info");
+        
+    const nome = document.createElement("h1");
+    nome.innerHTML = atleta.nome;
+    pagina.appendChild(nome);
+        
+    const imagem = document.createElement("img");
+    imagem.src = atleta.imagem;
+    foto.appendChild(imagem);
+    pagina.appendChild(foto);
+        
+    const posicao = document.createElement("h3");
+    posicao.innerHTML = `Posição: ${atleta.posicao}`;
+    info.appendChild(posicao);
+        
+    const nJogos = document.createElement("h3");
+    nJogos.innerHTML = `Número de jogos: ${atleta.n_jogos}`;
+    info.appendChild(nJogos);
+        
+    if (atleta.altura !== "") {
+        const altura = document.createElement("h3");
+        altura.innerHTML = `Altura: ${atleta.altura}`;
+        info.appendChild(altura);
+        }
+        
+        const no_botafogo_desde = document.createElement("h3");
+        no_botafogo_desde.innerHTML = `Joga no Botafogo desde: ${atleta.no_botafogo_desde}`;
+        info.appendChild(no_botafogo_desde);
+        
+        const nascimento = document.createElement("h3");
+        nascimento.innerHTML = `Data de nascimento: ${atleta.nascimento}`;
+        info.appendChild(nascimento);
+        
+        const naturalidade = document.createElement("h3");
+        naturalidade.innerHTML = `Naturalidade: ${atleta.naturalidade}`;
+        info.appendChild(naturalidade);
+        
+        const descricao = document.createElement("p");
+        descricao.innerHTML = atleta.detalhes;
+        info.appendChild(descricao);
+        
+        pagina.appendChild(info);
+        container.appendChild(pagina);
+        
+        const linkVoltar = document.createElement("a");
+        linkVoltar.href = "index.html";
+        linkVoltar.innerHTML = "Voltar à lista";
+        container.appendChild(linkVoltar);
+        };
+        
+        const obterIdJogador = () => {
+            const params = new URLSearchParams(window.location.search);
+            return parseInt(params.get("id"));
+        };
+        
+        if (sessionStorage.getItem("auth") === 'true') {
+            const id = obterIdJogador();
+            if (id) {
+                pega_json(`https://botafogo-atletas.mange.li/2024-1/${id}`).then((dados) => {
+                    if (dados.id) {
+                        exibeDetalhesJogador(dados);
+                    } else {
+                        document.body.innerHTML = "<h1>Falha ao carregar atleta!</h1> <a href='index.html'>Voltar</a>";
+                    }
+                });
+            } else {
+                buscarJogadores('all');
+            }
+        } else {
+            document.body.innerHTML = "<h1>Você precisa estar logado.</h1> <a href='index.html'>Voltar</a>";
+        }
+        
         imagem.alt = `Foto de ${jogador.nome}`;
         jogadorDiv.appendChild(imagem);
 
@@ -34,33 +90,4 @@ const exibe_jogadores = (jogadores) => {
         jogadorDiv.appendChild(descricao);
 
         container.appendChild(jogadorDiv);
-    });
-};
 
-const buscarJogadores = (filtro) => {
-    let url = '';
-
-    switch (filtro) {
-        case 'masculino':
-            url = 'https://botafogo-atletas.mange.li/2024-1/masculino';
-            break;
-        case 'feminino':
-            url = 'https://botafogo-atletas.mange.li/2024-1/feminino';
-            break;
-        case 'all':
-            url = 'https://botafogo-atletas.mange.li/2024-1/all';
-            break;
-        default:
-            return;
-    }
-
-    pega_json(url).then((dados) => {
-        exibe_jogadores(dados);
-    });
-};
-
-document.getElementById('btn-todos').addEventListener('click', () => buscarJogadores('all'));
-document.getElementById('btn-masculino').addEventListener('click', () => buscarJogadores('masculino'));
-document.getElementById('btn-feminino').addEventListener('click', () => buscarJogadores('feminino'));
-
-buscarJogadores('all');
