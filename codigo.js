@@ -32,7 +32,7 @@ const exibe_jogadores = (jogadores) => {
 
     const linkDetalhes = document.createElement("a");
     linkDetalhes.href = `detalhes.html?id=${jogador.id}`;
-    linkDetalhes.innerHTML = "Ver mais detalhes";
+    linkDetalhes.innerHTML = "Saiba Mais";
     jogadorDiv.appendChild(linkDetalhes);
 
     container.appendChild(jogadorDiv);

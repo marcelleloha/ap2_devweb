@@ -1,7 +1,12 @@
+const obterIdJogador = () => {
+    const params = new URLSearchParams(window.location.search);
+    return parseInt(params.get("id")); 
+};
 
- const exibeDetalhesJogador = (atleta) => {
+
+const exibeDetalhesJogador = (atleta) => {
     const container = document.getElementById('atleta-container');
-    container.innerHTML = '';
+    container.innerHTML = '';  
         
     const pagina = document.createElement("div");
     pagina.classList.add("pagina");
@@ -33,61 +38,46 @@
         const altura = document.createElement("h3");
         altura.innerHTML = `Altura: ${atleta.altura}`;
         info.appendChild(altura);
-        }
+    }
         
-        const no_botafogo_desde = document.createElement("h3");
-        no_botafogo_desde.innerHTML = `Joga no Botafogo desde: ${atleta.no_botafogo_desde}`;
-        info.appendChild(no_botafogo_desde);
+    const no_botafogo_desde = document.createElement("h3");
+    no_botafogo_desde.innerHTML = `Joga no Botafogo desde: ${atleta.no_botafogo_desde}`;
+    info.appendChild(no_botafogo_desde);
         
-        const nascimento = document.createElement("h3");
-        nascimento.innerHTML = `Data de nascimento: ${atleta.nascimento}`;
-        info.appendChild(nascimento);
+    const nascimento = document.createElement("h3");
+    nascimento.innerHTML = `Data de nascimento: ${atleta.nascimento}`;
+    info.appendChild(nascimento);
         
-        const naturalidade = document.createElement("h3");
-        naturalidade.innerHTML = `Naturalidade: ${atleta.naturalidade}`;
-        info.appendChild(naturalidade);
+    const naturalidade = document.createElement("h3");
+    naturalidade.innerHTML = `Naturalidade: ${atleta.naturalidade}`;
+    info.appendChild(naturalidade);
         
-        const descricao = document.createElement("p");
-        descricao.innerHTML = atleta.detalhes;
-        info.appendChild(descricao);
+    const descricao = document.createElement("p");
+    descricao.innerHTML = atleta.detalhes;
+    info.appendChild(descricao);
         
-        pagina.appendChild(info);
-        container.appendChild(pagina);
+    pagina.appendChild(info);
+    container.appendChild(pagina);
         
-        const linkVoltar = document.createElement("a");
-        linkVoltar.href = "index.html";
-        linkVoltar.innerHTML = "Voltar à lista";
-        container.appendChild(linkVoltar);
-        };
-        
-        const obterIdJogador = () => {
-            const params = new URLSearchParams(window.location.search);
-            return parseInt(params.get("id"));
-        };
-        
-        if (sessionStorage.getItem("auth") === 'true') {
-            const id = obterIdJogador();
-            if (id) {
-                pega_json(`https://botafogo-atletas.mange.li/2024-1/${id}`).then((dados) => {
-                    if (dados.id) {
-                        exibeDetalhesJogador(dados);
-                    } else {
-                        document.body.innerHTML = "<h1>Falha ao carregar atleta!</h1> <a href='index.html'>Voltar</a>";
-                    }
-                });
-            } else {
-                buscarJogadores('all');
-            }
+    const linkVoltar = document.createElement("a");
+    linkVoltar.href = "index.html";
+    linkVoltar.innerHTML = "Voltar à lista";
+    container.appendChild(linkVoltar);
+};
+
+const buscaJogadorPorId = (id) => {
+    pega_json(`https://botafogo-atletas.mange.li/2024-1/${id}`).then((dados) => {
+        if (dados.id) {
+            exibeDetalhesJogador(dados);  
         } else {
-            document.body.innerHTML = "<h1>Você precisa estar logado.</h1> <a href='index.html'>Voltar</a>";
+            document.body.innerHTML = "<h1>Falha ao carregar atleta!</h1> <a href='index.html'>Voltar</a>";
         }
-        
-        imagem.alt = `Foto de ${jogador.nome}`;
-        jogadorDiv.appendChild(imagem);
+    });
+};
 
-        const descricao = document.createElement("p");
-        descricao.innerHTML = jogador.detalhes;
-        jogadorDiv.appendChild(descricao);
-
-        container.appendChild(jogadorDiv);
-
+const idJogador = obterIdJogador(); 
+if (idJogador) {
+    buscaJogadorPorId(idJogador); 
+} else {
+    document.body.innerHTML = "<h1>Jogador não encontrado!</h1> <a href='index.html'>Voltar</a>";
+}
