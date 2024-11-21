@@ -1,6 +1,7 @@
-/* Estilo geral para a página de detalhes */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;800&display=swap');
+
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: #f9f9f9;
   margin: 0;
   padding: 0;
@@ -10,7 +11,7 @@ body {
   height: 100vh;
 }
 
-/* Container para os detalhes do atleta */
+
 #atleta-container {
   width: 100%;
   max-width: 1000px;
@@ -21,7 +22,7 @@ body {
   margin-top: 20px;
 }
 
-/* Estilo para a foto do atleta */
+
 .pagina {
   display: flex;
   flex-direction: column;
@@ -37,17 +38,17 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para as informações do atleta */
+
 .info {
   margin-top: 20px;
   text-align: center;
   color: #333;
 }
 
-/* Títulos das informações (nome do jogador e dados) */
+
 h1 {
   font-size: 36px;
-  color: #f5a623; /* rosa */
+  color: #f5a623; 
   margin-bottom: 10px;
 }
 
@@ -57,7 +58,6 @@ h3 {
   margin: 8px 0;
 }
 
-/* Descrição do atleta */
 p {
   font-size: 16px;
   color: #555;
@@ -65,7 +65,7 @@ p {
   margin-top: 15px;
 }
 
-/* Botão Voltar */
+
 a {
   display: inline-block;
   margin-top: 20px;
@@ -80,12 +80,10 @@ a {
   transition: background-color 0.3s ease;
 }
 
-/* Efeito ao passar o mouse no botão Voltar */
+
 a:hover {
   background-color: #d88f1b;
 }
-
-/* Estilo para links de texto como detalhes */
 a {
   color: #f5a623;
   text-decoration: none;
@@ -96,7 +94,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Responsividade para telas menores */
+
 @media screen and (max-width: 768px) {
   .pagina {
       padding: 10px;
