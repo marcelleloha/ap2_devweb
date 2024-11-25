@@ -7,7 +7,7 @@ const testaSenha = (senha) => {
 
   if (hex_sha256(senha) === senhaCorretaHash) {
     sessionStorage.setItem('auth', 'true');
-    carregaAtletas(); 
+    carregaAtletas();
   } else {
     alert('Senha incorreta! Tente novamente.');
   }
@@ -64,6 +64,14 @@ const configuraEntrada = () => {
   container.appendChild(loginDiv);
 
   document.body.appendChild(container);
+
+  select.innerHTML = `
+        <option disabled selected>Escolha o elenco</option>
+        <option value="masculino">Masculino</option>
+        <option value="feminino">Feminino</option>
+        <option value="all">Elenco Completo</option>
+    `
+
 };
 
 configuraEntrada();

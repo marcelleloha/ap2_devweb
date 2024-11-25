@@ -61,17 +61,6 @@
   line-height: 1.5;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700;800&display=swap');
-
-:root {
-  --rosa-claro: #ffb6c1;
-  --rosa-escuro: #ff69b4;
-  --rosa-vivo: #ff1493;
-  --branco: #ffffff;
-  --cinza-claro: #f0f0f0;
-  --cinza-escuro: #333333;
-}
-
 #login-body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -174,14 +163,7 @@
     box-shadow: 0 3px 8px rgba(255, 20, 147, 0.4);
     transform: translateY(1px);
   }
-  :root {
-    --rosa-claro: #ffb6c1;
-    --rosa-escuro: #ff69b4;
-    --rosa-vivo: #ff1493;
-    --branco: #ffffff;
-    --cinza-claro: #f0f0f0;
-    --cinza-escuro: #333333;
-  }
+
   #atletas-body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -267,22 +249,22 @@
     max-width: 2000px;
     margin: 2em auto;
   }
+
+  @media (max-width: 1024px) {
+    .atletas-container {
+      grid-template-columns: 1fr 1fr 1fr 1fr ; 
+    }
+  }
+  
+  @media (max-width: 728px) {
+    .atletas-container {
+      grid-template-columns: 1fr 1fr 1fr; 
+    }
+  }
   
   @media (max-width: 1300px) {
     .atletas-container {
-      grid-template-columns: repeat(3, 1fr); /* 3 colunas para telas menores */
-    }
-  }
-  
-  @media (max-width: 1024px) {
-    .atletas-container {
-      grid-template-columns: repeat(2, 1fr); /* 2 colunas para telas menores ainda */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .atletas-container {
-      grid-template-columns: 1fr; /* 1 coluna para telas muito pequenas */
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
     }
   }
   
@@ -376,3 +358,21 @@
     transform: scale(1);
   }
   
+  select {
+  font-size: 24px;
+  font-weight: bold;
+  height: 2.7em;
+  width: 10em;
+  text-align: center;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 2em auto;
+  display: block;
+
+  @media screen and (min-width: 768px) {
+      display: none;
+  }
+}
+

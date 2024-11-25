@@ -2,15 +2,16 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
+  background-color: #ffeaea;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  flex-direction: column;
+  text-align: center;
 }
-
 
 #atleta-container {
   width: 100%;
@@ -20,13 +21,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
-}
-
-
-.pagina {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
 
 .foto img {
@@ -34,42 +29,34 @@ body {
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #f5a623; /* cor de borda */
+  border: 4px solid #e7669c; /* cor de borda */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-
-.info {
   margin-top: 20px;
-  text-align: center;
-  color: #333;
 }
 
-
-h1 {
+a {
   font-size: 36px;
-  color: #f5a623; 
+  color: #e7669c; 
   margin-bottom: 10px;
 }
 
 h3 {
   font-size: 18px;
-  color: #666;
+  color: #333333;
   margin: 8px 0;
 }
 
 p {
   font-size: 16px;
-  color: #555;
+  color: #333333;
   line-height: 1.6;
   margin-top: 15px;
 }
 
-
-a {
+h1 {
   display: inline-block;
   margin-top: 20px;
-  background-color: #f5a623;
+  background-color: #e7669c;
   color: white;
   text-decoration: none;
   padding: 10px 20px;
@@ -80,44 +67,33 @@ a {
   transition: background-color 0.3s ease;
 }
 
-
 a:hover {
-  background-color: #d88f1b;
+  background-color: #e7669c;
 }
-a {
-  color: #f5a623;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 
 @media screen and (max-width: 768px) {
-  .pagina {
-      padding: 10px;
+  body {
+    padding: 10px;
   }
 
   .foto img {
-      width: 150px;
-      height: 150px;
+    width: 150px;
+    height: 150px;
   }
 
   h1 {
-      font-size: 28px;
+    font-size: 28px;
   }
 
   h3 {
-      font-size: 16px;
+    font-size: 16px;
   }
 
   p {
-      font-size: 14px;
+    font-size: 14px;
   }
 
   a {
-      padding: 8px 16px;
+    padding: 8px 16px;
   }
 }
